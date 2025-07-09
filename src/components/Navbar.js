@@ -60,7 +60,7 @@ export const Navbar = () => {
   }, [shopOpen]);
 
   return (
-    <nav className="fixed w-full h-24 shadow-xl bg-white z-50">
+    <nav className="top-0 w-full h-30 shadow-xl bg-white z-50 sticky">
       <div className="flex justify-between items-center h-full w-full px-4 2xl:px-16">
         <Link href="/">
           <Image
@@ -79,32 +79,103 @@ export const Navbar = () => {
               <Link href="/">home</Link>
             </li>
 
-            <li className=" link-underline link-underline-black ml-10 uppercase text-xl">
+            <li className=" link-underline link-underline-black ml-10 ">
               <div onClick={handleOverlay} className="flex items-center gap-1 cursor-pointer">
-                <span>shop</span>
+                <span className="uppercase text-xl">shop</span>
                 <ChevronDownIcon className="h-6 w-6 text-black" />
               </div>
 
               <div
                 ref={overlayRef}
                 className={`${shopOpen
-                  ? "opacity-100 scale-100 top-24"
+                  ? "opacity-100 scale-100 top-30"
                   : "opacity-0 scale-95 top-[-100%]"
                   } 
               fixed left-0 w-full h-screen p-10 bg-black/90 backdrop-blur-sm 
               transition-all duration-700 ease-in-out transform z-40`}
               >
-                <ul className="text-white space-y-4 text-lg">
-                  <li>
-                    <Link href="/shop/men" onClick={() => setShopOpen(false)}>Men</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop/women" onClick={() => setShopOpen(false)}>Women</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Accessories</Link>
-                  </li>
-                </ul>
+                <div className="grid grid-cols-3">
+
+                  <div className="text-white">
+                    <h1 className="mb-4 text-xl">Shop Tops</h1>
+                    <ul className="text-l space-y-8">
+                      <li>
+                        <Link href="/shop"> Women's Hoodies</Link>
+                      </li>
+                      <li>
+                        Men's Hoodies
+                      </li>
+                      <li>
+                        Allow Yourself To Grow Edition
+                      </li>
+                      <li>
+                        Rare Hearts Edition
+                      </li>
+                      <li>
+                        Starlight Edition
+                      </li>
+                      <li>
+                        Bomber Jackets
+                      </li>
+                      <li>
+                        Sweater Weather
+                      </li>
+                      <li>
+                        Premium Edition
+                      </li>
+                      <li>
+                        Real Social Club Edition
+                      </li>
+
+                    </ul>
+                  </div>
+                  <div className="text-white ">
+                    <h1 className="mb-4 text-xl">Shop Bottomwear</h1>
+                    <ul className="space-y-4">
+                      <li>
+                        Cargo Pants
+                      </li>
+                      <li>
+                        Cargo Shorts
+                      </li>
+                      <li>
+                        Trackpants
+                      </li>
+                      <li>
+                        Fleece Shorts
+                      </li>
+                    </ul>
+
+                  </div>
+
+                  <div>
+                    <ul className="text-white space-y-4 text-lg">
+                      <li>
+                        <Link href="/shop/men" onClick={() => setShopOpen(false)}>Shop All</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/men" onClick={() => setShopOpen(false)}>Men</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/women" onClick={() => setShopOpen(false)}>Women</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Accessories</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Puzzle Tracksuit</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Fleece Set</Link>
+                      </li>
+                      <li>
+                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}></Link>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+
               </div>
 
             </li>
@@ -114,8 +185,8 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="link-underline link-underline-black ml-10 uppercase text-xl">
-              <Link href="/cart">
-                  <AiOutlineUser className="h-6 w-6 text-black" />
+              <Link href="/account">
+                <AiOutlineUser className="h-6 w-6 text-black" />
               </Link>
             </li>
           </ul>
@@ -128,8 +199,8 @@ export const Navbar = () => {
         <div
           className={
             menuOpen
-              ? "fixed left-0 top-0 w-[65%] sm:hidden h-screen bg-[#ecf0f3] p-10 ease-in duration-500"
-              : "fixed left-[-100%] top-0 p-10 ease-in duration-500"
+              ? "fixed left-0 top-0 w-[65%] sm:hidden h-screen bg-[#ecf0f3] p-10 ease-in duration-500 z-40"
+              : "fixed left-[-100%] h-screen top-0 p-10 ease-in-out duration-900 z-40"
           }
         >
           <div className="flex w-full items-center justify-end">
