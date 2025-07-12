@@ -17,6 +17,11 @@ import {
   from "react-icons/ai";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { IoExitOutline } from "react-icons/io5";
+import { useAuthContext } from '@/app/firebase/AuthContext';
+import { logout } from '@/app/firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useCart } from "@/app/firebase/cartContext";
 
 
 
@@ -26,6 +31,13 @@ export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const overlayRef = useRef(null);
+  const { user, loading } = useAuthContext();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/');
+  };
 
   const handleNav = () => {
     setMenuOpen(!menuOpen);
@@ -34,6 +46,8 @@ export const Navbar = () => {
   const handleOverlay = () => {
     setShopOpen(!shopOpen);
   };
+
+  const { cartCount } = useCart();
 
   // Close on Escape key
   useEffect(() => {
@@ -74,7 +88,7 @@ export const Navbar = () => {
         </Link>
 
         <div className="hidden sm:flex">
-          <ul className="hidden sm:flex">
+          <ul className="hidden sm:flex justify-center items-center">
             <li className="link-underline link-underline-black ml-10 uppercase text-xl">
               <Link href="/">home</Link>
             </li>
@@ -95,99 +109,159 @@ export const Navbar = () => {
               transition-all duration-700 ease-in-out transform z-40`}
               >
                 <div className="grid grid-cols-3">
-
+                  {/* Shop Tops */}
                   <div className="text-white">
                     <h1 className="mb-4 text-xl">Shop Tops</h1>
                     <ul className="text-l space-y-8">
                       <li>
-                        <Link href="/shop"> Women's Hoodies</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Women's Hoodies" } }} onClick={() => setShopOpen(false)}>
+                          Women&apos;s Hoodies
+                        </Link>
                       </li>
                       <li>
-                        Men's Hoodies
+                        <Link href={{ pathname: "/shop", query: { category: "Men's Hoodies" } }} onClick={() => setShopOpen(false)}>
+                          Men&apos;s Hoodies
+                        </Link>
                       </li>
                       <li>
-                        Allow Yourself To Grow Edition
+                        <Link href={{ pathname: "/shop", query: { category: "Allow Yourself To Grow Edition" } }} onClick={() => setShopOpen(false)}>
+                          Allow Yourself To Grow Edition
+                        </Link>
                       </li>
                       <li>
-                        Rare Hearts Edition
+                        <Link href={{ pathname: "/shop", query: { category: "Rare Hearts Edition" } }} onClick={() => setShopOpen(false)}>
+                          Rare Hearts Edition
+                        </Link>
                       </li>
                       <li>
-                        Starlight Edition
+                        <Link href={{ pathname: "/shop", query: { category: "Starlight Edition" } }} onClick={() => setShopOpen(false)}>
+                          Starlight Edition
+                        </Link>
                       </li>
                       <li>
-                        Bomber Jackets
+                        <Link href={{ pathname: "/shop", query: { category: "Bomber Jackets" } }} onClick={() => setShopOpen(false)}>
+                          Bomber Jackets
+                        </Link>
                       </li>
                       <li>
-                        Sweater Weather
+                        <Link href={{ pathname: "/shop", query: { category: "Sweater Weather" } }} onClick={() => setShopOpen(false)}>
+                          Sweater Weather
+                        </Link>
                       </li>
                       <li>
-                        Premium Edition
+                        <Link href={{ pathname: "/shop", query: { category: "Premium Edition" } }} onClick={() => setShopOpen(false)}>
+                          Premium Edition
+                        </Link>
                       </li>
                       <li>
-                        Real Social Club Edition
+                        <Link href={{ pathname: "/shop", query: { category: "Real Social Club Edition" } }} onClick={() => setShopOpen(false)}>
+                          Real Social Club Edition
+                        </Link>
                       </li>
-
                     </ul>
                   </div>
-                  <div className="text-white ">
+
+                  {/* Shop Bottomwear */}
+                  <div className="text-white">
                     <h1 className="mb-4 text-xl">Shop Bottomwear</h1>
                     <ul className="space-y-4">
                       <li>
-                        Cargo Pants
+                        <Link href={{ pathname: "/shop", query: { category: "Cargo Pants" } }} onClick={() => setShopOpen(false)}>
+                          Cargo Pants
+                        </Link>
                       </li>
                       <li>
-                        Cargo Shorts
+                        <Link href={{ pathname: "/shop", query: { category: "Cargo Shorts" } }} onClick={() => setShopOpen(false)}>
+                          Cargo Shorts
+                        </Link>
                       </li>
                       <li>
-                        Trackpants
+                        <Link href={{ pathname: "/shop", query: { category: "Trackpants" } }} onClick={() => setShopOpen(false)}>
+                          Trackpants
+                        </Link>
                       </li>
                       <li>
-                        Fleece Shorts
+                        <Link href={{ pathname: "/shop", query: { category: "Fleece Shorts" } }} onClick={() => setShopOpen(false)}>
+                          Fleece Shorts
+                        </Link>
                       </li>
                     </ul>
-
                   </div>
 
+                  {/* General Categories */}
                   <div>
                     <ul className="text-white space-y-4 text-lg">
                       <li>
-                        <Link href="/shop/men" onClick={() => setShopOpen(false)}>Shop All</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "All" } }} onClick={() => setShopOpen(false)}>
+                          Shop All
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/shop/men" onClick={() => setShopOpen(false)}>Men</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Men" } }} onClick={() => setShopOpen(false)}>
+                          Men
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/shop/women" onClick={() => setShopOpen(false)}>Women</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Women" } }} onClick={() => setShopOpen(false)}>
+                          Women
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Accessories</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Accessories" } }} onClick={() => setShopOpen(false)}>
+                          Accessories
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Puzzle Tracksuit</Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Puzzle Tracksuit" } }} onClick={() => setShopOpen(false)}>
+                          Puzzle Tracksuit
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}>Fleece Set</Link>
-                      </li>
-                      <li>
-                        <Link href="/shop/accessories" onClick={() => setShopOpen(false)}></Link>
+                        <Link href={{ pathname: "/shop", query: { category: "Fleece Set" } }} onClick={() => setShopOpen(false)}>
+                          Fleece Set
+                        </Link>
                       </li>
                     </ul>
                   </div>
-
                 </div>
+
 
               </div>
 
             </li>
             <li className="link-underline link-underline-black ml-10 uppercase text-xl">
               <Link href="/cart">
-                <HiOutlineShoppingBag className="h-6 w-6 text-black" />
+                <div className="relative">
+                  <HiOutlineShoppingBag className="h-6 w-6 text-black" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2 text-xs">
+                      {cartCount}
+                    </span>
+                  )}
+                </div>
               </Link>
             </li>
-            <li className="link-underline link-underline-black ml-10 uppercase text-xl">
-              <Link href="/account">
-                <AiOutlineUser className="h-6 w-6 text-black" />
-              </Link>
+            <li className="link-underline link-underline-black ml-10 uppercase text-2xl">
+
+              {loading ? (
+                <span>Loading...</span>
+              ) : user ? (
+                <button
+                  className="flex justify-center items-center"
+                  onClick={handleLogout}
+                  title={`Log out ${user.fullName || user.email}`} // <--- Hover text
+                >
+                  <span className="mr-2">{user.fullName}</span>
+
+                  <IoExitOutline className="w-10 h-8" />
+                </button>
+
+
+              ) : (
+                <Link href="/account">
+                  <AiOutlineUser className="h-6 w-6 text-black" />
+                </Link>
+              )}
             </li>
           </ul>
         </div>
@@ -203,8 +277,27 @@ export const Navbar = () => {
               : "fixed left-[-100%] h-screen top-0 p-10 ease-in-out duration-900 z-40"
           }
         >
-          <div className="flex w-full items-center justify-end">
-            <div onClick={handleNav} className="cursor-pointer">
+          <div className="flex w-full items-center justify-between">
+            <div>
+              {loading ? (
+                <span>Loading...</span>
+              ) : user ? (
+                <span
+                  className="flex justify-center items-center text-lg"
+                  title={`Log out ${user.fullName || user.email}`} // <--- Hover text
+                >
+                  <span className="mr-2">Welcome {user.fullName}</span>
+                </span>
+
+
+              ) : (
+                <Link href="/account">
+                  <AiOutlineUser className="h-6 w-6 text-black" />
+                </Link>
+              )}
+
+            </div>
+            <div onClick={handleNav} className="cursor-pointer ">
               <AiOutlineClose size={25} />
             </div>
           </div>
@@ -235,6 +328,28 @@ export const Navbar = () => {
             <AiOutlineInstagram size={30} className="cursor-pointer" />
             <AiOutlineFacebook size={30} className="cursor-pointer" />
             <AiOutlineTwitter size={30} className="cursor-pointer" />
+          </div>
+
+          <div>
+            {loading ? (
+              <span>Loading...</span>
+            ) : user ? (
+              <button
+                className="absolute bottom-10 right-[10%] flex justify-end items-center"
+                onClick={handleLogout}
+                title={`Log out ${user.fullName || user.email}`} // <--- Hover text
+              >
+
+                <IoExitOutline className="w-10 h-8" />
+              </button>
+
+
+            ) : (
+              <Link href="/account">
+                <AiOutlineUser className="h-6 w-6 text-black" />
+              </Link>
+            )}
+
           </div>
         </div>
 

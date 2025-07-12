@@ -109,11 +109,13 @@ export default function Index() {
 
       <div className='grid md:grid-cols-2 gap-0 w-[100'>
         <Image
-          all="Image"
+          alt="Image"
           src={dummy}
+
           className='w-[100%]'
         />
         <Image
+          alt="Image"
           src={dummy}
           className='w-[100%]'
         />
