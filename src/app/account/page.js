@@ -243,7 +243,7 @@ export default function Account() {
                                 </button>
                             </form>
                             <span className='text-sm'>
-                                Don't have an account?{' '}
+                                Don&apos;t have an account?{' '}
                                 <button className='text-indigo-600 underline cursor-pointer' onClick={() => setIsLoginMobile(false)}>
                                     Register
                                 </button>

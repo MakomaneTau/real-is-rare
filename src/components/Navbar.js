@@ -115,12 +115,12 @@ export const Navbar = () => {
                     <ul className="text-l space-y-8">
                       <li>
                         <Link href={{ pathname: "/shop", query: { category: "Women's Hoodies" } }} onClick={() => setShopOpen(false)}>
-                          Women's Hoodies
+                          Women&apos;s Hoodies
                         </Link>
                       </li>
                       <li>
                         <Link href={{ pathname: "/shop", query: { category: "Men's Hoodies" } }} onClick={() => setShopOpen(false)}>
-                          Men's Hoodies
+                          Men&apos;s Hoodies
                         </Link>
                       </li>
                       <li>

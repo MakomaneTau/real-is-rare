@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footerbar } from "@/components/Footerbar";
-import ViewProduct from "./viewProduct";
+import ViewProduct from "@/app/product/viewProduct";
 import React, { useEffect, useState } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
