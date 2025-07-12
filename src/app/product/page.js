@@ -1,39 +1,40 @@
-import React from 'react'
-import Product from "@/app/shop/productcard";
-import { Navbar } from '@/components/Navbar';
-import { Footerbar } from '@/components/Footerbar';
-import ViewProduct from './viewProduct';
+"use client";
+import { useSearchParams } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
+import { Footerbar } from "@/components/Footerbar";
+import ViewProduct from "./viewProduct";
+import React, { useEffect, useState } from "react";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "@/app/firebase/config";
 
-export default function product() {
-    return (
-        <>
-            <Navbar />
-            <main>
+export default function ProductPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const [product, setProduct] = useState(null);
 
-                <ViewProduct />
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!id) return;
+      const docRef = doc(db, "catalogue", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setProduct({ id: docSnap.id, ...docSnap.data() });
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
-                <div className='mt-10'>
-                    <h1>
-
-                    </h1>
-
-                    {/*Add Cards here*/}
-                </div>
-                <div className='p-10'>
-                    <h1 className='text-3xl flex justify-center items-center'>You would also like: </h1>
-                    <hr className="h-px  mb-10 bg-gray-200 border-0 dark:bg-gray-700 bg-gradient-to-r from-[#ccc] via-[#333] to-[#ccc]" />
-
-                    <div>
-                        {/*Fill with product cards*/}
-                    </div>
-
-                </div>
-
-
-            </main>
-            <Footerbar />
-
-
-        </>
-    )
+  return (
+    <>
+      <Navbar />
+      <main>
+        {product ? (
+          <ViewProduct product={product} />
+        ) : (
+          <div className="p-10">Loading product...</div>
+        )}
+        <Footerbar />
+      </main>
+    </>
+  );
 }
