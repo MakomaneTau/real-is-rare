@@ -1,7 +1,11 @@
 "use client";
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import dummy from '@/app/index/dummy.jpg'
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "@/app/firebase/config";
+import { Productcard } from "@/app/shop/productcard";
+import ViewProduct from "@/app/product/viewProduct";
+import ProductDetails from '@/app/product/ProductDetails';
 
 export default function Index() {
 
@@ -24,6 +28,21 @@ export default function Index() {
     setPage((prev) => (prev + 1 > 3 ? 1 : prev + 1));
   };
 
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      const snapshot = await getDocs(collection(db, "catalogue"));
+      const all = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const filtered = all.filter(product => product.featured === true);
+      setFeaturedProducts(filtered);
+      console.log(filtered);
+    };
+
+    fetchFeatured();
+  }, []);
+
+
   return (
     <main>
 
@@ -32,7 +51,7 @@ export default function Index() {
       >
         <div className="relative w-full h-300">
           <Image
-            src="/assets/img_1.jpg"
+            src="https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/carousel/img_1.jpg"
             alt="Carousel"
             fill
             className="object-cover"
@@ -40,7 +59,7 @@ export default function Index() {
         </div>
         <div className="relative w-full h-300">
           <Image
-            src="/assets/img_2.jpg"
+            src="https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/carousel/img_2.jpg"
             alt="Carousel"
             fill
             className="object-cover"
@@ -48,7 +67,7 @@ export default function Index() {
         </div>
         <div className="relative w-full h-300">
           <Image
-            src="/assets/img_3.jpg"
+            src="https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/carousel/img_3.jpg"
             alt="Carousel"
             fill
             className="object-cover"
@@ -64,7 +83,8 @@ export default function Index() {
           <Image
             className='w-full h-full object-cover object-center'
             sizes='100vw'
-            fill
+            width={1}
+            height={1}
             alt="Image 1"
             src={`https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/carousel/img_${page}.jpg`}
           />
@@ -90,35 +110,40 @@ export default function Index() {
       </div>
 
 
+      {/* Featured Items Grid */}
       <div className='p-10'>
         <h1 className='text-3xl flex justify-center items-center'>Featured Items</h1>
-        <hr className="h-px  mb-10 bg-gray-200 border-0 dark:bg-gray-700 bg-gradient-to-r from-[#ccc] via-[#333] to-[#ccc]" />
-
-        <div>
-          {/*Fill with product cards*/}
+        <hr className="h-px mb-10 bg-gray-200 border-0 dark:bg-gray-700 bg-gradient-to-r from-[#ccc] via-[#333] to-[#ccc]" />
+        <div className="flex flex-wrap justify-center items-center gap-2">
+          {featuredProducts.map(product => (
+            <Productcard key={product.id} product={product} />
+          ))}
         </div>
-
       </div>
 
       {/*Product*/}
       <div>
         <h1 className='text-3xl flex justify-center items-center'>Featured Item</h1>
         <hr className="h-px  mb-10 bg-gray-200 border-0 dark:bg-gray-700 bg-gradient-to-r from-[#ccc] via-[#333] to-[#ccc]" />
-
-
+        {featuredProducts[0] && (
+          <ProductDetails product={featuredProducts[0]} productId={featuredProducts[0].id} />
+        )}
       </div>
 
-      <div className='grid md:grid-cols-2 gap-0 w-[100'>
+      <div className='grid md:grid-cols-2 gap-0'>
         <Image
           alt="Image"
-          src={dummy}
-
+          src={`https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/index/img_4.jpg`}
+          width={300}
+          height={100}
           className='w-[100%]'
         />
         <Image
           alt="Image"
-          src={dummy}
+          src={`https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/index/img_5.jpg`}
           className='w-[100%]'
+          width={200}
+          height={100}
         />
       </div>
     </main>

@@ -24,6 +24,10 @@ export default function ProductClient() {
     fetchProduct();
   }, [id]);
 
+  useEffect(() => {
+    console.log(product);
+  }, [product]);
+
   return (
     <>
       {product ? (
