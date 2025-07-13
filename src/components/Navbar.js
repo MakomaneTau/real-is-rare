@@ -22,13 +22,13 @@ import { useAuthContext } from '@/app/firebase/AuthContext';
 import { logout } from '@/app/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/app/firebase/cartContext";
-
-
-
+import { HiOutlineArrowRight } from 'react-icons/hi';
+import { HiOutlineArrowLeft } from 'react-icons/hi';
 
 export const Navbar = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const overlayRef = useRef(null);
   const { user, loading } = useAuthContext();
@@ -41,6 +41,10 @@ export const Navbar = () => {
 
   const handleNav = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const handleOverlay = () => {
@@ -192,7 +196,7 @@ export const Navbar = () => {
                   <div>
                     <ul className="text-white space-y-4 text-lg">
                       <li>
-                        <Link href={{ pathname: "/shop", query: { category: "All" } }} onClick={() => setShopOpen(false)}>
+                        <Link href={{ pathname: "/shop" }} onClick={() => setShopOpen(false)}>
                           Shop All
                         </Link>
                       </li>
@@ -265,10 +269,25 @@ export const Navbar = () => {
             </li>
           </ul>
         </div>
+        <ul className="sm:hidden cursor-pointer">
+          <button>
+            <Link href="/cart">
+              <div className="relative">
+                <HiOutlineShoppingBag className="h-6 w-6 text-black" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2 text-xs">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+            </Link>
+          </button>
+          <button onClick={handleNav} className="pl-6">
+            <AiOutlineMenu size={25} />
+          </button>
 
-        <div onClick={handleNav} className="sm:hidden cursor-pointer pl-24">
-          <AiOutlineMenu size={25} />
-        </div>
+        </ul>
+
 
         <div
           className={
@@ -310,12 +329,53 @@ export const Navbar = () => {
               >
                 <Link href="/">home</Link>
               </li>
-              <li
-                onClick={() => setMenuOpen(false)}
-                className="link-underline link-underline-black py-4 cursor-pointer"
-              >
-                <Link href="/shop">shop</Link>
+              <li className="link-underline link-underline-black py-4 cursor-pointer">
+                <button onClick={handleMobileMenu} className="flex items-center justify-between w-full">
+                  <span>shop</span>
+                  {mobileMenuOpen ? (
+                    <HiOutlineArrowLeft className="ml-2 mt-1" />
+                  ) : (
+                    <HiOutlineArrowRight className="ml-2 mt-1" />
+                  )}
+                </button>
+
+                {mobileMenuOpen && (
+                  <ul className="mt-4 ml-4 space-y-3 text-sm text-gray-700">
+                    <li>
+                      <Link href={{ pathname: "/shop" }} onClick={handleNav}>
+                        Shop All
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={{ pathname: "/shop", query: { category: "Women's Hoodies" } }} onClick={handleNav}>
+                        Women
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={{ pathname: "/shop", query: { category: "Men's Hoodies" } }} onClick={handleNav}>
+                        Men
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={{ pathname: "/shop", query: { category: "Cargo Pants" } }} onClick={handleNav}>
+                        Winter Collection
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={{ pathname: "/shop", query: { category: "Trackpants" } }} onClick={handleNav}>
+                        Summer Collection
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={{ pathname: "/shop", query: { category: "Accessories" } }} onClick={handleNav}>
+                        Accessories
+                      </Link>
+                    </li>
+
+                  </ul>
+                )}
               </li>
+
               <li
                 onClick={() => setMenuOpen(false)}
                 className="link-underline link-underline-black py-4 cursor-pointer"
@@ -330,12 +390,12 @@ export const Navbar = () => {
             <AiOutlineTwitter size={30} className="cursor-pointer" />
           </div>
 
-          <div>
+          <div className="absolute bottom-10 right-[10%] flex justify-end items-center">
             {loading ? (
               <span>Loading...</span>
             ) : user ? (
               <button
-                className="absolute bottom-10 right-[10%] flex justify-end items-center"
+
                 onClick={handleLogout}
                 title={`Log out ${user.fullName || user.email}`} // <--- Hover text
               >

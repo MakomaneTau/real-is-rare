@@ -66,7 +66,7 @@ export default function Index() {
             sizes='100vw'
             fill
             alt="Image 1"
-            src={`/assets/img_${page}.jpg`}
+            src={`https://dtzimw3pf8jogmpp.public.blob.vercel-storage.com/carousel/img_${page}.jpg`}
           />
 
         </div>
@@ -104,6 +104,7 @@ export default function Index() {
       <div>
         <h1 className='text-3xl flex justify-center items-center'>Featured Item</h1>
         <hr className="h-px  mb-10 bg-gray-200 border-0 dark:bg-gray-700 bg-gradient-to-r from-[#ccc] via-[#333] to-[#ccc]" />
+
 
       </div>
 
